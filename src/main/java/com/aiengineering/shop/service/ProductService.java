@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -23,13 +24,10 @@ public class ProductService {
         return products;
     }
 
-    public Product getById(Long id) {
-        for (Product p : products) {
-            if (p.getId() == id) {
-                return p;
-            }
-        }
-        return null;
+    public Optional<Product> getById(Long id) {
+        return products.stream()
+            .filter(p -> p.getId().equals(id))
+            .findFirst();
     }
 
     public Product create(Product product) {
